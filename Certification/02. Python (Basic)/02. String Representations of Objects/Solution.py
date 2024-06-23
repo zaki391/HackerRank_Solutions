@@ -1,35 +1,40 @@
-import math
-import os
-import random
-import re
-import sys
-
-
 class Car:
+    def __init__(self, max_speed, unit):
+        self.max_speed = max_speed
+        self.unit = unit
 
-    def __new__(cls, max_speed,unit):
-        return "Car with the maximum speed of {0} {1}".format(max_speed, unit)
+    def __str__(self):
+        return "Car with the maximum speed of {} {}".format(self.max_speed, self.unit)
 
 class Boat:
+    def __init__(self, max_speed):
+        self.max_speed = max_speed
 
-    def __new__(cls,max_speed):
-        return "Boat with the maximum speed of {0} knots".format(max_speed)
+    def __str__(self):
+        return "Boat with the maximum speed of {} knots".format(self.max_speed)
 
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().strip().split('\n')
+    
+    q = int(data[0])
+    queries = data[1:]
+    
+    for query in queries:
+        parts = query.split()
+        vehicle_type = parts[0]
+        
+        if vehicle_type == 'car':
+            max_speed = int(parts[1])
+            unit = parts[2]
+            car = Car(max_speed, unit)
+            print(car)
+        
+        elif vehicle_type == 'boat':
+            max_speed = int(parts[1])
+            boat = Boat(max_speed)
+            print(boat)
 
-if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
-    q = int(input())
-    queries = []
-    for _ in range(q):
-        args = input().split()
-        vehicle_type, params = args[0], args[1:]
-        if vehicle_type == "car":
-            max_speed, speed_unit = int(params[0]), params[1]
-            vehicle = Car(max_speed, speed_unit)
-        elif vehicle_type == "boat":
-            max_speed = int(params[0])
-            vehicle = Boat(max_speed)
-        else:
-            raise ValueError("invalid vehicle type")
-        fptr.write("%s\n" % vehicle)
-    fptr.close()
+if __name__ == "__main__":
+    main()
